@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   }
   s.social_media_url = 'https://twitter.com/aligatr'
 
-  s.source = {Add commentMore actions
+  s.source = {
     http: "https://github.com/rafaelnobrekz/SwiftGen/releases/download/#{s.version}/swiftgen-#{s.version}.zip"
   }
   s.source_files = [ 'bin/*' ]
