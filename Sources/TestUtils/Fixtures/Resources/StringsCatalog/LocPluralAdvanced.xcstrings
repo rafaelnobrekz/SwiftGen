@@ -552,6 +552,44 @@
         }
       }
     },
+    "multiple.placeholders-and-variables.positionalstring-positional2int" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@elements@"
+          },
+          "substitutions" : {
+            "elements" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%1$@ has one rating"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%1$@ has %2$d ratings"
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%1$@ has no rating"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "multiple.variables.three-variables-in-formatkey" : {
       "extractionState" : "manual",
       "localizations" : {

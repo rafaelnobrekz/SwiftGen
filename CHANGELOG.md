@@ -14,6 +14,9 @@ _None_
   [Łukasz Lech](https://github.com/leszko11)
   [#1124](https://github.com/SwiftGen/SwiftGen/pull/1124)
   [#1065](https://github.com/SwiftGen/SwiftGen/issues/1065)
+* Strings: added support for plural with positional parameters.  
+  [Arnaud Dorgans](https://github.com/arnauddorgans)
+  [#1147](https://github.com/SwiftGen/SwiftGen/pull/1147)
 
 ### Bug Fixes
 
