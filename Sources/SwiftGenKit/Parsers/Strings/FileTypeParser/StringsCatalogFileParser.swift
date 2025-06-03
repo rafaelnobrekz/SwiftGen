@@ -59,9 +59,8 @@ extension Strings {
       from localization: Strings.Localization,
       key: String
     ) throws -> [Strings.PlaceholderType] {
-      let keyValue = localization.stringUnit?.value ?? key
       let placeholderTypes = try Strings.PlaceholderType.placeholderTypes(
-        fromFormat: keyValue
+        fromFormat: localization.allFormatSpecifiers ?? key
       )
       if !placeholderTypes.isEmpty {
         return placeholderTypes
@@ -74,4 +73,36 @@ extension Strings {
       }
     }
   }
+}
+
+extension Strings.Localization {
+    /// Extract the format specifiers from the different variable substitution
+    /// definitions into a single flattened list of placeholders
+    var allFormatSpecifiers: String? {
+      guard let stringUnit else { return nil }
+      guard let substitutions else {
+        return stringUnit.value
+      }
+      let formatKey = stringUnit.value
+      var result = formatKey
+      var offset = 0
+
+      for (name, var nsrange, positionalArgument) in Strings.variableNames(fromFormatKey: formatKey) {
+        guard let variable = substitutions.first(where: { $0.key == name }) else { continue }
+
+        let variablePlaceholder: String
+        if let positionalArgument = positionalArgument {
+          variablePlaceholder = "%\(positionalArgument)$\(variable.value.formatSpecifier)"
+        } else {
+          variablePlaceholder = "%\(variable.value.formatSpecifier)"
+        }
+
+        nsrange.location += offset
+        guard let range = Range(nsrange, in: result) else { continue }
+        result.replaceSubrange(range, with: variablePlaceholder)
+        offset += variablePlaceholder.count - nsrange.length
+      }
+
+      return result
+    }
 }

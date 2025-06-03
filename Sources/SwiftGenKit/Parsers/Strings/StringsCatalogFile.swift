@@ -40,10 +40,16 @@ extension Strings {
   struct Localization: Decodable {
     let stringUnit: StringUnit?
     let variations: Variations?
+    let substitutions: [String: Substitution]?
   }
 
   struct Variations: Decodable {
     let plural: PluralVariation?
+  }
+
+  struct Substitution: Decodable {
+    let formatSpecifier: String
+    let variations: Variations?
   }
 
   struct PluralVariation: Decodable {
@@ -74,3 +80,33 @@ extension Strings {
     let value: String
   }
 }
+
+//extension Strings.Localization {
+//  /// Extract the placeholders (`NSStringFormatValueTypeKey`) from the different variable
+//  /// definitions into a single flattened list of placeholders
+//  var formatKeyWithVariableValueTypes: String {
+//    let formatKey = stringUnit?.value ?? ""
+//      let variables = self.variations?.plural?.all
+//    var result = formatKey
+//    var offset = 0
+//
+//    for (name, var nsrange, positionalArgument) in StringsDict.variableNames(fromFormatKey: formatKey) {
+//      guard let variable = variables.first(where: { $0.name == name }) else { continue }
+//
+//      let variablePlaceholder: String
+//      if let positionalArgument = positionalArgument {
+//        variablePlaceholder = "%\(positionalArgument)$\(variable.rule.valueTypeKey)"
+//      } else {
+//        variablePlaceholder = "%\(variable.rule.valueTypeKey)"
+//      }
+//
+//      nsrange.location += offset
+//      guard let range = Range(nsrange, in: result) else { continue }
+//      result.replaceSubrange(range, with: variablePlaceholder)
+//      offset += variablePlaceholder.count - nsrange.length
+//    }
+//
+//    return result
+//  }
+//}
+

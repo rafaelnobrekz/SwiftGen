@@ -112,7 +112,7 @@ extension StringsDict: Decodable {
         """
       )
     case let (.some(formatKey), .none):
-      let variableNames = StringsDict.variableNames(fromFormatKey: formatKey).map(\.name)
+      let variableNames = Strings.variableNames(fromFormatKey: formatKey).map(\.name)
       let variables = try variableNames.reduce(into: [PluralEntry.Variable]()) { variables, variableName in
         let variableRule = try container.decode(PluralEntry.VariableRule.self, forKey: CodingKeys(key: variableName))
         // Combination of the format specifiers of the `PlaceholderType.float` and `PlaceholderType.int`.
@@ -133,7 +133,7 @@ extension StringsDict: Decodable {
 
 // - MARK: Helpers
 
-extension StringsDict {
+extension Strings {
   typealias VariableNameResult = (name: String, range: NSRange, positionalArgument: Int?)
 
   /// Parses variable names and their ranges from a `NSStringLocalizedFormatKey`.
@@ -142,7 +142,7 @@ extension StringsDict {
   ///
   /// - Parameter formatKey: The formatKey from which the variable names should be parsed.
   /// - Returns: An array of discovered variable names, their range within the `formatKey` and the positional argument.
-  private static func variableNames(fromFormatKey formatKey: String) -> [VariableNameResult] {
+  static func variableNames(fromFormatKey formatKey: String) -> [VariableNameResult] {
     let pattern = #"%(?>(\d+)\$)?#@([\w\.\p{Pd}]+)@"#
     guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
       fatalError("Unable to compile regular expression when parsing StringsDict entries")
@@ -173,7 +173,7 @@ extension StringsDict.PluralEntry {
     var result = formatKey
     var offset = 0
 
-    for (name, var nsrange, positionalArgument) in StringsDict.variableNames(fromFormatKey: formatKey) {
+    for (name, var nsrange, positionalArgument) in Strings.variableNames(fromFormatKey: formatKey) {
       guard let variable = variables.first(where: { $0.name == name }) else { continue }
 
       let variablePlaceholder: String

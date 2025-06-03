@@ -66,9 +66,9 @@ public enum Strings {
 
     /// This list must be ordered by priority, higher priority first
     private static let subParsers: [StringsFileTypeParser.Type] = [
+        StringsCatalogFileParser.self,
       StringsDictFileParser.self,
-      StringsFileParser.self,
-      StringsCatalogFileParser.self
+      StringsFileParser.self
     ]
 
     public init(options: [String: Any] = [:], warningHandler: Parser.MessageHandler? = nil) throws {
